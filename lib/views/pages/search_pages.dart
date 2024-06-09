@@ -86,7 +86,9 @@ class _SearchPageState extends State<SearchPage> {
           title: Text(tracks[index].title),
           subtitle: Text(tracks[index].singerId),
           onTap: () {
-            final userProvider = Provider.of<UserProvider>(context);
+            final userProvider =
+            Provider.of<UserProvider>(context,
+                listen: false);
             final trackId = tracks[index].id ?? "";
             userProvider.setCurrentTrackId(trackId);
             userProvider.notifyTrackListChanged(tracks);

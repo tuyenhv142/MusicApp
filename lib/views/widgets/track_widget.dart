@@ -1,6 +1,7 @@
 import 'package:app/view_models/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/track_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 Widget getTrackList(BuildContext context, List<Track> trackList) {
@@ -96,8 +97,8 @@ Widget buildTrackCard(
                     final trackId = track.id ?? "";
                     userProvider.setCurrentTrackId(trackId);
                     userProvider.notifyTrackListChanged(trackList);
-                    print("${trackId}");
-                    print("${trackList.length}");
+                    // print("${trackId}");
+                    // print("${trackList.length}");
                   },
                   icon: const Icon(Icons.play_circle, color: Colors.black),
                 ),
@@ -105,8 +106,22 @@ Widget buildTrackCard(
                   onPressed: () {
                     if (isFavorite) {
                       userProvider.removeFavoriteTrackId(track.id ?? "");
+                      Fluttertoast.showToast(
+                        msg: 'Delete to library successfully!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                      );
                     } else {
                       userProvider.addFavoriteTrackId(track.id ?? "");
+                      Fluttertoast.showToast(
+                        msg: 'Add to library successfully!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                      );
                     }
                   },
                   icon: Icon(

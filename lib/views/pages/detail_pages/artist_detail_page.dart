@@ -4,6 +4,7 @@ import 'package:app/models/track_model.dart';
 import 'package:app/view_models/singer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/track_provide.dart';
@@ -57,11 +58,22 @@ class _ArtistDetailPageState extends State<ArtistDetailPage> {
       body: FutureBuilder<List<Track>>(
         future: trackProvider.getTracksBySingerId(singer?.id),
         builder: (context, snapshot) {
-          // if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return Center(child: CircularProgressIndicator());
-          // }
           if (snapshot.hasError) {
             return const Center(child: Text('Error loading data'));
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: Center(
+                    child: LoadingAnimationWidget.beat(
+                      color: Colors.black,
+                      size: 50,
+                    ),
+                  ),
+                ),
+              ],
+            );
           }
           final List<Track> tracks = snapshot.data!;
           bool isFavorite = userProvider.isFavoriteArtist(singer?.id);

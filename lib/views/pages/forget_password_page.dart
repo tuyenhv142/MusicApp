@@ -61,8 +61,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
+    return
+       Scaffold(
         appBar: AppBar(
           title: const Text(
             "Forget Password",
@@ -174,7 +174,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             ),
           ),
         ),
-      ),
-    );
+      );
+
   }
 }

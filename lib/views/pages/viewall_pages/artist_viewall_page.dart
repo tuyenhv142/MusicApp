@@ -2,6 +2,7 @@ import 'package:app/models/singer_model.dart';
 import 'package:app/view_models/singer_provider.dart';
 import 'package:app/view_models/track_provide.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class _ArtistViewAllState extends State<ArtistViewAll> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Artist'),
+        title: const Text('Artist'),
         centerTitle: true,
       ),
       body: ListView.builder(
@@ -62,6 +63,9 @@ class _ArtistViewAllState extends State<ArtistViewAll> {
           return FutureBuilder<int>(
             future: trackProvider.getTrackCountBySingerId(singer.id),
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Error loading track count');
+              }
               // if (snapshot.connectionState == ConnectionState.waiting) {
               //   return Stack(
               //     children: [
@@ -76,9 +80,6 @@ class _ArtistViewAllState extends State<ArtistViewAll> {
               //     ],
               //   );
               // }
-              if (snapshot.hasError) {
-                return const Text('Error loading track count');
-              }
               var trackCount = snapshot.data ?? 0;
               return GestureDetector(
                 onTap: () {
